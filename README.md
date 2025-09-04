@@ -4,8 +4,9 @@
 
 ## 功能特性
 
-- 🎤 **文本转语音**: 使用 Google Gemini API 将文本转换为高质量语音
-- 🔊 **多种语音**: 支持多种英语语音选项
+- 🎤 **文本转语音**: 使用 Google Cloud Text-to-Speech API 将文本转换为高质量语音
+- 🔊 **多种语音**: 支持中文（普通话）和英语语音选项
+- 🇨🇳 **中文支持**: 内置多种中文普通话语音（男声/女声）
 - ⚡ **语速调节**: 可调节语音播放速度 (0.25x - 4.0x)
 - 💾 **音频下载**: 支持下载生成的 MP3 音频文件
 - 🎵 **在线播放**: 内置音频播放器，支持播放/暂停控制
@@ -14,11 +15,14 @@
 
 ## 快速开始
 
-### 1. 获取 API Key
+### 1. API Key 说明
 
-1. 访问 [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. 创建新的 API Key
-3. 复制 API Key 备用
+应用已内置默认 API Key，可直接使用。如需使用自己的 API Key：
+
+1. 访问 [Google Cloud Console](https://console.cloud.google.com/)
+2. 启用 Text-to-Speech API
+3. 创建 API Key 并复制
+4. 在应用中替换默认 API Key
 
 ### 2. 部署应用
 
@@ -56,19 +60,24 @@ php -S localhost:8000
 
 ## 使用说明
 
-1. **设置 API Key**: 在页面顶部输入您的 Gemini API Key 并点击保存
+1. **API Key**: 应用已内置默认 API Key，可直接使用（也可输入自己的 API Key）
 2. **输入文本**: 在文本框中输入要转换的文本（最多 5000 字符）
-3. **选择语音**: 从下拉菜单中选择喜欢的语音类型
+3. **选择语音**: 从下拉菜单中选择语音类型（支持中文普通话和英语）
 4. **调节语速**: 使用滑块调节语音播放速度
 5. **生成语音**: 点击"生成语音"按钮或使用快捷键 `Ctrl+Enter`
 6. **播放/下载**: 生成完成后可以在线播放或下载音频文件
 
+### 语音选项说明
+- **中文普通话**: 支持标准语音和 Wavenet 高质量语音（男声/女声）
+- **英语**: 支持多种美式英语语音选项
+
 ## 技术栈
 
 - **前端**: HTML5, CSS3, JavaScript (ES6+)
-- **API**: Google Gemini Text-to-Speech API
+- **API**: Google Cloud Text-to-Speech API
 - **音频格式**: MP3
 - **存储**: LocalStorage (API Key)
+- **语言支持**: 中文（普通话）、英语
 
 ## 文件结构
 
