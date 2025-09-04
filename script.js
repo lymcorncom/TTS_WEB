@@ -1,6 +1,6 @@
 class TTSApp {
     constructor() {
-        this.apiKey = localStorage.getItem('gemini_api_key') || '';
+        this.apiKey = localStorage.getItem('gemini_api_key') || 'AIzaSyBGAP9ZFdEu8ZQwQtP0zhzex0cdT8ntlmQ';
         this.initializeElements();
         this.bindEvents();
         this.loadSavedApiKey();
@@ -43,6 +43,10 @@ class TTSApp {
     loadSavedApiKey() {
         if (this.apiKey) {
             this.apiKeyInput.value = this.apiKey;
+            // 如果有默认API key，自动保存到localStorage
+            if (this.apiKey === 'AIzaSyBGAP9ZFdEu8ZQwQtP0zhzex0cdT8ntlmQ') {
+                localStorage.setItem('gemini_api_key', this.apiKey);
+            }
         }
     }
 
@@ -97,21 +101,24 @@ class TTSApp {
         const voice = this.voiceSelect.value;
         const speed = parseFloat(this.speedRange.value);
 
+        // 判断是否为中文语音
+        const isChinese = voice.startsWith('cmn-CN');
+        
         const requestBody = {
-            model: "models/text-to-speech-001",
             input: {
                 text: text
             },
             voice: {
+                languageCode: isChinese ? 'cmn-CN' : 'en-US',
                 name: voice
             },
             audioConfig: {
-                audioEncoding: "MP3",
+                audioEncoding: 'MP3',
                 speakingRate: speed
             }
         };
 
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/text-to-speech-001:generateContent?key=${this.apiKey}`, {
+        const response = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize?key=${this.apiKey}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -126,11 +133,11 @@ class TTSApp {
 
         const data = await response.json();
         
-        if (!data.candidates || !data.candidates[0] || !data.candidates[0].content || !data.candidates[0].content.parts || !data.candidates[0].content.parts[0] || !data.candidates[0].content.parts[0].inlineData) {
+        if (!data.audioContent) {
             throw new Error('API 响应格式不正确');
         }
 
-        return data.candidates[0].content.parts[0].inlineData.data;
+        return data.audioContent;
     }
 
     displayAudio(base64AudioData) {
