@@ -1,6 +1,7 @@
 # Netlify redirects file
 # API proxy to avoid CORS issues (if needed)
-/api/*  https://generativelanguage.googleapis.com/:splat  200
+/api/gemini/*  https://generativelanguage.googleapis.com/:splat  200
+/api/tts/*     https://texttospeech.googleapis.com/:splat  200
 
 # SPA fallback (not needed for this static app, but good to have)
 /*    /index.html   200
